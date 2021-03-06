@@ -1,58 +1,103 @@
-$(document).ready(function() {
+#main-section {
+    padding: 2% 8%;
+    box-sizing: border-box;
+}
 
-    function createCheckoutProductCard(obj) {
-        
-        var card = document.createElement('div');
-        card.classList.add('checkout-card');
+#main-heading {
+    font-size: 36px;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 48px;
+}
 
-        var firstInnerDiv = document.createElement('div');
-        var productImg = document.createElement('img');
-        productImg.classList.add('checkout-product-img');
-        productImg.src = obj.preview;
-        firstInnerDiv.appendChild(productImg);
+#content-wrapper {
+    display: flex;
+    justify-content: start;
+}
 
-        var secondInnerDiv = document.createElement('div');
-        var productName = document.createElement('h4');
-        productName.innerHTML = obj.name;
-        var productCount = document.createElement('p');
-        productCount.innerHTML = 'x'+obj.count;
-        var amountLabel = document.createElement('span');
-        amountLabel.innerHTML = 'Amount: Rs ';
-        var amountSpan = document.createElement('span');
-        amountSpan.innerHTML = parseInt(obj.count) * parseInt(obj.price);
-        var productAmount = document.createElement('p');
-        productAmount.appendChild(amountLabel);
-        productAmount.appendChild(amountSpan);
-        secondInnerDiv.appendChild(productName);
-        secondInnerDiv.appendChild(productCount);
-        secondInnerDiv.appendChild(productAmount);
+#content-wrapper > div:first-of-type {
+    width: 50%;
+}
 
-        card.appendChild(firstInnerDiv);
-        card.appendChild(secondInnerDiv);
+#content-wrapper > div:last-of-type {
+    width: 50%;
+    height: fit-content;
+    margin-top: 48px;
+    margin-left: 3%;
 
-        return card;
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px #ccc;
+    border-radius: 5px;
+    padding: 16px;
+}
+
+.checkout-card {
+    display: flex;
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px #ccc;
+    border-radius: 5px;
+    background-color: white;
+    max-width: 600px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.checkout-product-img {
+    width: 80px;
+    min-width: 80px;
+    border-radius: 5px;
+    margin-right: 16px;
+}
+
+.checkout-card h4 {
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 4px;
+    font-size: 18px;
+}
+
+.checkout-card p {
+    margin: 0;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.section-heading {
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 400;
+    margin: 0;
+    margin-bottom: 16px;
+}
+
+#total-amount {
+    color: black;
+    opacity: 0.8;
+    font-size: 24px;
+    font-weight: 800;
+    margin-left: 4px;
+}
+
+#btn-place-order{ 
+    background-color: #009688;
+    font-size: 18px;
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    padding: 18px 36px;
+    border-radius: 6px;
+    margin-top: 36px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+@media screen and (max-width:900px){
+    #content-wrapper{
+        flex-direction: column;
     }
 
-    var productList = window.localStorage.getItem('product-list');
-    productList = productList === null || productList === '' ? [] : productList;
-    productList = productList.length > 0 ? JSON.parse(productList) : [];
-
-    var grandTotal = 0;
-    for(var i=0; i<productList.length; i++) {
-        $('#card-list').append(createCheckoutProductCard(productList[i]));
-        var totalForCurrentProduct = parseFloat(productList[i].count) * parseFloat(productList[i].price);
-        grandTotal = grandTotal + totalForCurrentProduct;
+    #content-wrapper > div:last-of-type, #content-wrapper > div:first-of-type {
+        width: 100%;
     }
-
-    $('#item-count').html(productList.length);
-    $('#total-amount').html(grandTotal);
-
-    $('#btn-place-order').click(function() {
-
-        var orderItemArr = [];
-        alert('Order Placed Successfully')
-        localStorage.setItem('product-list', []);
-
-        location.assign('./ordercomplete.html');
-    })
-})
+}
